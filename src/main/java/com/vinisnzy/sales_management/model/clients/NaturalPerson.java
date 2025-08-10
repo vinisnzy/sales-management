@@ -15,4 +15,9 @@ import lombok.Setter;
 public class NaturalPerson extends Client {
     @Column(nullable = false, unique = true)
     private String cpf;
+
+    @Override
+    public String getDocument() {
+        return getCpf();
+    }
 }

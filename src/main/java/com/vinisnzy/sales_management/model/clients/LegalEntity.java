@@ -17,4 +17,9 @@ import lombok.Setter;
 public class LegalEntity extends Client {
     @Column(nullable = false, unique = true)
     private String cnpj;
+
+    @Override
+    public String getDocument() {
+        return getCnpj();
+    }
 }

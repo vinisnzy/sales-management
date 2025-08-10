@@ -38,4 +38,6 @@ public abstract class Client {
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Sale> sales = new ArrayList<>();
+
+    public abstract String getDocument();
 }
