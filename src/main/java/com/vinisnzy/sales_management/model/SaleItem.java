@@ -28,9 +28,16 @@ public class SaleItem {
     private Integer quantity;
 
     @Column(nullable = false)
-    private BigDecimal subtotal;
+    private BigDecimal subtotal = BigDecimal.ZERO;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sale_id", nullable = false)
     private Sale sale;
+
+    public SaleItem(Product product, Integer quantity, Sale sale) {
+        this.product = product;
+        this.quantity = quantity;
+        this.sale = sale;
+        this.subtotal = product.getPrice().multiply(BigDecimal.valueOf(quantity));
+    }
 }
