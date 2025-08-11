@@ -13,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NaturalPerson extends Client {
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String cpf;
 
     @Override

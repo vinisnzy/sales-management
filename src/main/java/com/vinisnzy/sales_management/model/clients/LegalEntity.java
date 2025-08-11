@@ -15,7 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LegalEntity extends Client {
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String cnpj;
 
     @Override
