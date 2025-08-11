@@ -1,7 +1,9 @@
 package com.vinisnzy.sales_management.dto.client;
 
+import com.vinisnzy.sales_management.enums.ClientType;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public record ClientRequestDTO(
@@ -17,17 +19,13 @@ public record ClientRequestDTO(
 
         @NotBlank(message = "Telephone cannot be blank")
         @Pattern(
-                regexp = "^\\+?[0-9]{10,15}$",
-                message = "Telephone must be between 10 and 15 digits, optionally starting with '+'"
+                regexp = "^\\+?55?([1-9]{2})?(\\d{4,5}\\d{4})$",
+                message = "Telephone must be between 10 and 15 digits, optionally starting with country code '55'"
         )
         String telephone,
 
-        @NotBlank(message = "Type cannot be blank")
-        @Pattern(
-                regexp = "^(NATURAL_PERSON|LEGAL_ENTITY)$",
-                message = "Type must be either 'NATURAL_PERSON' or 'LEGAL_ENTITY'"
-        )
-        String type,
+        @NotNull(message = "Type cannot be null")
+        ClientType type,
 
         @NotBlank(message = "Document cannot be blank")
         @Pattern(
