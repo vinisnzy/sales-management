@@ -1,5 +1,6 @@
 package com.vinisnzy.sales_management.model;
 
+import com.vinisnzy.sales_management.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,4 +27,7 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private UserRole role;
 }
