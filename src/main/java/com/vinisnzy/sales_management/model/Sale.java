@@ -1,8 +1,8 @@
 package com.vinisnzy.sales_management.model;
 
+import com.vinisnzy.sales_management.enums.SaleStatus;
 import com.vinisnzy.sales_management.model.clients.Client;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,7 +17,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Sale {
 
     @Id
@@ -33,8 +32,39 @@ public class Sale {
     private List<SaleItem> items = new ArrayList<>();
 
     @Column(nullable = false)
-    private BigDecimal total;
+    private BigDecimal total = BigDecimal.ZERO;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
+
+    @Column
+    private LocalDateTime completedAt;
+
+    @Column
+    private LocalDateTime canceledAt;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private SaleStatus status = SaleStatus.PENDING;
+
+    public Sale(Client client) {
+        this.client = client;
+        this.createdAt = LocalDateTime.now();
+    }
+
+    public void addItem(SaleItem item) {
+        items.add(item);
+        item.setSale(this);
+        total = total.add(item.getSubtotal());
+    }
+
+    public void removeItem(Long itemId) {
+        SaleItem itemToRemove = items.stream()
+                .filter(item -> item.getId().equals(itemId))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Item not found with id: " + itemId));
+
+        items.remove(itemToRemove);
+        total = total.subtract(itemToRemove.getSubtotal());
+    }
 }
