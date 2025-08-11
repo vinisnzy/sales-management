@@ -9,6 +9,7 @@ import com.vinisnzy.sales_management.model.clients.NaturalPerson;
 import jdk.jfr.Name;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface ClientMapper {
@@ -26,6 +27,10 @@ public interface ClientMapper {
     @Mapping(target = "sales", ignore = true)
     @Mapping(source = "document", target = "cpf")
     NaturalPerson toNaturalPerson(ClientRequestDTO clientRequestDTO);
+
+    void updateLegalEntity(ClientRequestDTO data, @MappingTarget LegalEntity legalEntity);
+
+    void updateNaturalPerson(ClientRequestDTO data, @MappingTarget NaturalPerson naturalPerson);
 
     @Name("identifyClientType")
     default String identifyClientType(Client client) {
