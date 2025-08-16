@@ -3,6 +3,7 @@ package com.vinisnzy.sales_management.service;
 import com.vinisnzy.sales_management.dto.client.ClientRequestDTO;
 import com.vinisnzy.sales_management.dto.client.ClientResponseDTO;
 import com.vinisnzy.sales_management.enums.ClientType;
+import com.vinisnzy.sales_management.exceptions.EntityNotFoundException;
 import com.vinisnzy.sales_management.mappers.ClientMapper;
 import com.vinisnzy.sales_management.model.clients.Client;
 import com.vinisnzy.sales_management.model.clients.LegalEntity;
@@ -28,7 +29,7 @@ public class ClientService {
             var client = mapper.toNaturalPerson(data);
             return mapper.toClientResponseDTO(repository.save(client));
         }
-        throw new IllegalArgumentException("Invalid client type: " + data.type());
+        throw new EntityNotFoundException("Invalid client type: " + data.type());
     }
 
     public List<ClientResponseDTO> getAllClients() {
@@ -51,7 +52,7 @@ public class ClientService {
             mapper.updateNaturalPerson(data, (NaturalPerson) client);
             return mapper.toClientResponseDTO(repository.save(client));
         }
-        throw new IllegalArgumentException("Invalid client type: " + data.type());
+        throw new EntityNotFoundException("Invalid client type: " + data.type());
     }
 
     public void deleteClient(Long id) {
@@ -60,6 +61,6 @@ public class ClientService {
 
     protected Client findById(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Client not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Client not found with id: " + id));
     }
 }

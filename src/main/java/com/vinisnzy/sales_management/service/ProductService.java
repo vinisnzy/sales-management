@@ -2,6 +2,7 @@ package com.vinisnzy.sales_management.service;
 
 import com.vinisnzy.sales_management.dto.product.ProductRequestDTO;
 import com.vinisnzy.sales_management.dto.product.ProductResponseDTO;
+import com.vinisnzy.sales_management.exceptions.EntityNotFoundException;
 import com.vinisnzy.sales_management.mappers.ProductMapper;
 import com.vinisnzy.sales_management.model.Product;
 import com.vinisnzy.sales_management.repositories.ProductRepository;
@@ -44,6 +45,6 @@ public class ProductService {
 
     public Product findById(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + id));
     }
 }

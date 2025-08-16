@@ -5,6 +5,7 @@ import com.vinisnzy.sales_management.dto.auth.LoginResponseDTO;
 import com.vinisnzy.sales_management.dto.auth.RegisterRequestDTO;
 import com.vinisnzy.sales_management.dto.auth.RegisterResponseDTO;
 import com.vinisnzy.sales_management.enums.UserRole;
+import com.vinisnzy.sales_management.exceptions.EntityNotFoundException;
 import com.vinisnzy.sales_management.model.User;
 import com.vinisnzy.sales_management.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ public class AuthService {
         this.authenticationManager.authenticate(usernamePassword);
 
         User user = repository.findByEmail(data.email())
-                .orElseThrow(() -> new IllegalArgumentException("User not found with email: " + data.email()));
+                .orElseThrow(() -> new EntityNotFoundException("User not found with email: " + data.email()));
 
         var token = tokenService.generateToken(user);
         return new LoginResponseDTO(token);

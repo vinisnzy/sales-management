@@ -4,6 +4,7 @@ import com.vinisnzy.sales_management.dto.sale.SaleRemoveItemDTO;
 import com.vinisnzy.sales_management.dto.sale.SaleItemRequestDTO;
 import com.vinisnzy.sales_management.dto.sale.SaleResponseDTO;
 import com.vinisnzy.sales_management.enums.SaleStatus;
+import com.vinisnzy.sales_management.exceptions.EntityNotFoundException;
 import com.vinisnzy.sales_management.mappers.SaleMapper;
 import com.vinisnzy.sales_management.model.Sale;
 import com.vinisnzy.sales_management.model.SaleItem;
@@ -74,6 +75,6 @@ public class SaleService {
 
     private Sale findById(Long id) {
         return saleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Sale not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Sale not found with id: " + id));
     }
 }
